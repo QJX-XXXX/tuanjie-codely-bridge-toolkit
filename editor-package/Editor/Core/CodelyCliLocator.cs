@@ -20,6 +20,21 @@ namespace QJX.CodexTuanjieBridge.Editor
             Func<string, bool> fileExists,
             Func<IReadOnlyList<string>> findOnPath)
         {
+            return Resolve(
+                configuredPath,
+                string.IsNullOrWhiteSpace(environmentPath)
+                    ? new string[0]
+                    : new[] { environmentPath },
+                fileExists,
+                findOnPath);
+        }
+
+        public static CodelyCliResolution Resolve(
+            string configuredPath,
+            IReadOnlyList<string> environmentPaths,
+            Func<string, bool> fileExists,
+            Func<IReadOnlyList<string>> findOnPath)
+        {
             if (fileExists == null)
             {
                 throw new ArgumentNullException("fileExists");
@@ -38,13 +53,18 @@ namespace QJX.CodexTuanjieBridge.Editor
                 return configured;
             }
 
-            CodelyCliResolution environment = TryResolve(
-                environmentPath,
-                "CODELY_CLI_PATH",
-                fileExists);
-            if (environment.Found)
+            for (int index = 0;
+                 environmentPaths != null && index < environmentPaths.Count;
+                 index++)
             {
-                return environment;
+                CodelyCliResolution environment = TryResolve(
+                    environmentPaths[index],
+                    "CODELY_CLI_PATH",
+                    fileExists);
+                if (environment.Found)
+                {
+                    return environment;
+                }
             }
 
             IReadOnlyList<string> pathCandidates;
@@ -72,7 +92,9 @@ namespace QJX.CodexTuanjieBridge.Editor
                 }
             }
 
-            return Missing("未找到 CodelyCLI，请在窗口中设置 EditorPrefs、CODELY_CLI_PATH 或 PATH。");
+            return Missing(
+                "未找到 CodelyCLI，已检查 EditorPrefs、最新的 CODELY_CLI_PATH 和 PATH；" +
+                "可点击“选择 CodelyCLI”指定 codely.cmd。");
         }
 
         private static CodelyCliResolution TryResolve(
@@ -88,7 +110,8 @@ namespace QJX.CodexTuanjieBridge.Editor
             string fullPath;
             try
             {
-                fullPath = System.IO.Path.GetFullPath(candidate.Trim());
+                fullPath = System.IO.Path.GetFullPath(
+                    candidate.Trim().Trim('"'));
             }
             catch
             {
@@ -127,6 +150,143 @@ namespace QJX.CodexTuanjieBridge.Editor
                 Source = string.Empty,
                 Error = error
             };
+        }
+    }
+
+    internal static class CodelyCliEnvironmentReader
+    {
+        internal static IReadOnlyList<string> ReadValues(string variableName)
+        {
+            var values = new List<string>();
+            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            AddValue(
+                values,
+                seen,
+                Environment.GetEnvironmentVariable(variableName));
+            AddTargetValue(values, seen, variableName, EnvironmentVariableTarget.User);
+            AddTargetValue(values, seen, variableName, EnvironmentVariableTarget.Machine);
+            return values;
+        }
+
+        internal static IReadOnlyList<string> FindExecutablesOnPath(
+            IReadOnlyList<string> pathValues,
+            string executableName,
+            Func<string, bool> fileExists,
+            Func<string, string> expandEnvironmentVariables)
+        {
+            if (fileExists == null)
+            {
+                throw new ArgumentNullException("fileExists");
+            }
+            if (expandEnvironmentVariables == null)
+            {
+                throw new ArgumentNullException("expandEnvironmentVariables");
+            }
+
+            var candidates = new List<string>();
+            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            for (int valueIndex = 0;
+                 pathValues != null && valueIndex < pathValues.Count;
+                 valueIndex++)
+            {
+                string pathValue;
+                try
+                {
+                    pathValue = expandEnvironmentVariables(pathValues[valueIndex]);
+                }
+                catch
+                {
+                    continue;
+                }
+                if (string.IsNullOrWhiteSpace(pathValue))
+                {
+                    continue;
+                }
+
+                string[] directories = pathValue.Split(
+                    new[] { Path.PathSeparator },
+                    StringSplitOptions.RemoveEmptyEntries);
+                for (int directoryIndex = 0;
+                     directoryIndex < directories.Length;
+                     directoryIndex++)
+                {
+                    string directory = directories[directoryIndex]
+                        .Trim()
+                        .Trim('"');
+                    if (directory.Length == 0)
+                    {
+                        continue;
+                    }
+
+                    string candidate;
+                    try
+                    {
+                        candidate = Path.GetFullPath(
+                            Path.Combine(directory, executableName));
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                    bool exists;
+                    try
+                    {
+                        exists = fileExists(candidate);
+                    }
+                    catch
+                    {
+                        exists = false;
+                    }
+                    if (exists && seen.Add(candidate))
+                    {
+                        candidates.Add(candidate);
+                    }
+                }
+            }
+            return candidates;
+        }
+
+        private static void AddTargetValue(
+            ICollection<string> values,
+            ISet<string> seen,
+            string variableName,
+            EnvironmentVariableTarget target)
+        {
+            try
+            {
+                AddValue(
+                    values,
+                    seen,
+                    Environment.GetEnvironmentVariable(variableName, target));
+            }
+            catch
+            {
+                // 某些运行环境不支持读取指定作用域，继续检查其他作用域。
+            }
+        }
+
+        private static void AddValue(
+            ICollection<string> values,
+            ISet<string> seen,
+            string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return;
+            }
+            string expanded;
+            try
+            {
+                expanded = Environment.ExpandEnvironmentVariables(value).Trim();
+            }
+            catch
+            {
+                expanded = value.Trim();
+            }
+            if (expanded.Length > 0 && seen.Add(expanded))
+            {
+                values.Add(expanded);
+            }
         }
     }
 }

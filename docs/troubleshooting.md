@@ -28,11 +28,11 @@
 
 ## CodelyCLI 找不到或版本失败
 
-优先顺序是 EditorWindow 中保存的路径、CODELY_CLI_PATH 环境变量、PATH 中的 codely.cmd。不要扫描任意磁盘，也不要猜测文件名。先运行：
+优先顺序是 EditorWindow 中保存的路径、最新读取到的 `CODELY_CLI_PATH`、PATH 中的 `codely.cmd`。从 `0.3.2` 起，点击“重新读取”会重新查询当前进程、Windows 用户级和系统级环境变量，并展开 `%USERPROFILE%` 等变量，不再只使用团结 Editor 启动时继承的 PATH。不要扫描任意磁盘，也不要猜测文件名。先运行：
 
     & "C:\Tools\CodelyCLI\codely.cmd" --version
 
-如果命令不可执行，修复路径或权限后再刷新窗口。
+如果你使用的是旧版包，或环境变量是在 Editor 启动后才修改的，可以完全退出团结 Editor 和团结 Hub 后重新打开；也可以直接点击“选择 CodelyCLI”指定实际的 `codely.cmd`。Windows npm 全局安装常见路径是 `%APPDATA%\npm\codely.cmd`，但窗口只使用实际环境变量或用户选择的路径，不会假设该目录一定存在。命令不可执行时，修复路径或权限后再刷新窗口。
 
 ## 项目被识别为 Unity
 

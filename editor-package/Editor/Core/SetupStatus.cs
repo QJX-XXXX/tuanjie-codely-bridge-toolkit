@@ -69,10 +69,11 @@ namespace QJX.CodexTuanjieBridge.Editor
             string root = projectRoot ?? string.Empty;
             status.DescriptorExists = File.Exists(
                 Path.Combine(root, ".com-unity-codely.json"));
-            string environmentPath = Environment.GetEnvironmentVariable("CODELY_CLI_PATH");
+            IReadOnlyList<string> environmentPaths =
+                CodelyCliEnvironmentReader.ReadValues("CODELY_CLI_PATH");
             status.CodelyCli = CodelyCliLocator.Resolve(
                 configuredCliPath,
-                environmentPath,
+                environmentPaths,
                 File.Exists,
                 FindCodelyCliOnPath);
             if (!status.CodelyCli.Found && string.IsNullOrEmpty(status.Error))
@@ -90,25 +91,11 @@ namespace QJX.CodexTuanjieBridge.Editor
 
         private static IReadOnlyList<string> FindCodelyCliOnPath()
         {
-            var candidates = new List<string>();
-            string path = Environment.GetEnvironmentVariable("PATH") ?? string.Empty;
-            string[] directories = path.Split(
-                new[] { Path.PathSeparator },
-                StringSplitOptions.RemoveEmptyEntries);
-            for (int index = 0; index < directories.Length; index++)
-            {
-                string directory = directories[index].Trim();
-                if (directory.Length == 0)
-                {
-                    continue;
-                }
-                string candidate = Path.Combine(directory, "codely.cmd");
-                if (File.Exists(candidate))
-                {
-                    candidates.Add(candidate);
-                }
-            }
-            return candidates;
+            return CodelyCliEnvironmentReader.FindExecutablesOnPath(
+                CodelyCliEnvironmentReader.ReadValues("PATH"),
+                "codely.cmd",
+                File.Exists,
+                Environment.ExpandEnvironmentVariables);
         }
     }
 

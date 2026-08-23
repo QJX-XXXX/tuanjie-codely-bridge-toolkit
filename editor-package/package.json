@@ -1,6 +1,6 @@
 {
   "name": "cn.qjx.codex-codely-setup",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "displayName": "Tuanjie Codely Agent Setup",
   "description": "Configures five Agent MCP entries and installs the Tuanjie Codely Skills suite safely in Tuanjie Editor.",
   "unity": "2022.3",
