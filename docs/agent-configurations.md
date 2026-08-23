@@ -32,7 +32,7 @@ WorkBuddy 的 Skills 兼容目录使用 `.codebuddy/skills/`，但 MCP 配置仍
 EditorWindow UPM 包：
 
 ```text
-https://github.com/QJX-XXXX/codex-tuanjie-codely-bridge.git?path=/editor-package
+https://github.com/QJX-XXXX/tuanjie-codely-bridge-toolkit.git?path=/editor-package
 ```
 
 ## 客户端刷新与工作区信任

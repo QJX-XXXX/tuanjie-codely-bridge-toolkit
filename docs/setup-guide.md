@@ -29,7 +29,7 @@ Unity 官方 Editor 项目不要使用本仓库的 Codely Bridge Skill、EditorW
 
 EditorWindow 安装示例：在团结 Editor（Unity 风格界面）打开 `Window → Package Manager`，点击左上角 `+`，选择 **Add package from git URL**，粘贴下面的地址并点击 **Add**：
 
-       https://github.com/QJX-XXXX/codex-tuanjie-codely-bridge.git?path=/editor-package
+       https://github.com/QJX-XXXX/tuanjie-codely-bridge-toolkit.git?path=/editor-package
 
 等待包导入、编译和 Domain Reload 完成，再打开 `Window/Tuanjie Codely Agent Setup`。这个包只提供设置窗口，不会自动安装或替换 Codely Bridge。
 
@@ -81,11 +81,11 @@ Agent 必须分别说明：
 
 手动回退时优先使用当前客户端官方 Skill 安装器；否则从以下 GitHub 子路径逐个获取并放入对应根目录，不要克隆整个仓库，也不要把仓库根或整个 `skills` 目录当作一个 Skill：
 
-    https://github.com/QJX-XXXX/codex-tuanjie-codely-bridge/tree/main/skills/tuanjie-workflows
-    https://github.com/QJX-XXXX/codex-tuanjie-codely-bridge/tree/main/skills/tuanjie-codely-bridge
-    https://github.com/QJX-XXXX/codex-tuanjie-codely-bridge/tree/main/skills/tuanjie-editor-automation
-    https://github.com/QJX-XXXX/codex-tuanjie-codely-bridge/tree/main/skills/tuanjie-package-management
-    https://github.com/QJX-XXXX/codex-tuanjie-codely-bridge/tree/main/skills/tuanjie-codely-custom-tools
+    https://github.com/QJX-XXXX/tuanjie-codely-bridge-toolkit/tree/main/skills/tuanjie-workflows
+    https://github.com/QJX-XXXX/tuanjie-codely-bridge-toolkit/tree/main/skills/tuanjie-codely-bridge
+    https://github.com/QJX-XXXX/tuanjie-codely-bridge-toolkit/tree/main/skills/tuanjie-editor-automation
+    https://github.com/QJX-XXXX/tuanjie-codely-bridge-toolkit/tree/main/skills/tuanjie-package-management
+    https://github.com/QJX-XXXX/tuanjie-codely-bridge-toolkit/tree/main/skills/tuanjie-codely-custom-tools
 
 安装后按当前客户端支持的 reload/重启方式确认五个 Skill 已被发现，再使用 `tuanjie-workflows` 作为入口或显式选择专项 Skill。Skill 全局安装与 MCP 配置范围互不等价：Skill 可以跨项目复用，而用户级全局 MCP 仍只指向最后配置的一个项目。
 

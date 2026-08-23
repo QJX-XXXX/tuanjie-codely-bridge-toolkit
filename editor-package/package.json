@@ -4,8 +4,8 @@
   "displayName": "Tuanjie Codely Agent Setup",
   "description": "Configures five Agent MCP entries and installs the Tuanjie Codely Skills suite safely in Tuanjie Editor.",
   "unity": "2022.3",
-  "documentationUrl": "https://github.com/QJX-XXXX/codex-tuanjie-codely-bridge",
-  "licensesUrl": "https://github.com/QJX-XXXX/codex-tuanjie-codely-bridge/blob/main/LICENSE",
+  "documentationUrl": "https://github.com/QJX-XXXX/tuanjie-codely-bridge-toolkit",
+  "licensesUrl": "https://github.com/QJX-XXXX/tuanjie-codely-bridge-toolkit/blob/main/LICENSE",
   "keywords": ["tuanjie", "codex", "claude-code", "qoder", "cursor", "workbuddy", "codely", "mcp"],
   "author": {
     "name": "QJX-XXXX",

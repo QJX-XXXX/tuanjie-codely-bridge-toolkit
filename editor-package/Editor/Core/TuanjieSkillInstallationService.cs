@@ -27,7 +27,7 @@ namespace QJX.CodexTuanjieBridge.Editor
         public const string OwnershipMarkerName = ".tuanjie-codely-skill-sync";
 
         private const string RepositoryOwner = "QJX-XXXX";
-        private const string RepositoryName = "codex-tuanjie-codely-bridge";
+        private const string RepositoryName = "tuanjie-codely-bridge-toolkit";
         private const string RepositoryBranch = "main";
         private const string UserAgent = "TuanjieCodelySkillInstaller/1.0";
 

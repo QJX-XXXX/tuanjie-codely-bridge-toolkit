@@ -584,11 +584,11 @@ README 的 Agent 提示区增加四个自然语言例子：连接诊断、Scene/
 在 `docs/setup-guide.md` 的公开来源中列出以下五个 URL：
 
 ```text
-https://github.com/QJX-XXXX/codex-tuanjie-codely-bridge/tree/main/skills/tuanjie-workflows
-https://github.com/QJX-XXXX/codex-tuanjie-codely-bridge/tree/main/skills/tuanjie-codely-bridge
-https://github.com/QJX-XXXX/codex-tuanjie-codely-bridge/tree/main/skills/tuanjie-editor-automation
-https://github.com/QJX-XXXX/codex-tuanjie-codely-bridge/tree/main/skills/tuanjie-package-management
-https://github.com/QJX-XXXX/codex-tuanjie-codely-bridge/tree/main/skills/tuanjie-codely-custom-tools
+https://github.com/QJX-XXXX/tuanjie-codely-bridge-toolkit/tree/main/skills/tuanjie-workflows
+https://github.com/QJX-XXXX/tuanjie-codely-bridge-toolkit/tree/main/skills/tuanjie-codely-bridge
+https://github.com/QJX-XXXX/tuanjie-codely-bridge-toolkit/tree/main/skills/tuanjie-editor-automation
+https://github.com/QJX-XXXX/tuanjie-codely-bridge-toolkit/tree/main/skills/tuanjie-package-management
+https://github.com/QJX-XXXX/tuanjie-codely-bridge-toolkit/tree/main/skills/tuanjie-codely-custom-tools
 ```
 
 提示要求 `skill-installer` 逐个安装到用户级目录；不要克隆整个仓库。保留 EditorWindow 包、CLI 定位、config 安全合并、备份和验收步骤。手动安装部分同时给出“整套推荐”和“只安装连接 Skill”的区别。

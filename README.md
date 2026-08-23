@@ -36,7 +36,7 @@
 
 在团结 Editor（Unity 风格界面）打开 `Window → Package Manager`，点击左上角 `+`，选择 **Add package from git URL**，粘贴下面的地址并点击 **Add**：
 
-    https://github.com/QJX-XXXX/codex-tuanjie-codely-bridge.git?path=/editor-package
+    https://github.com/QJX-XXXX/tuanjie-codely-bridge-toolkit.git?path=/editor-package
 
 等待包导入、编译和 Domain Reload 完成后，打开 `Window/Tuanjie Codely Agent Setup`。这个包只提供设置窗口，不会替你安装或替换 Codely Bridge。
 
