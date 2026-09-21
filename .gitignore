@@ -19,3 +19,13 @@ docs/superpowers/
 docs/validation.md
 tests/
 editor-package/Tests/
+
+# Local agent state and runtime connection descriptors
+.superpowers/
+**/.com-unity-codely.json
+
+# IDE and OS metadata
+.idea/
+.vs/
+.DS_Store
+Thumbs.db
