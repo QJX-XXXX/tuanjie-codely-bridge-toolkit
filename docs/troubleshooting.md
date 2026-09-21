@@ -42,6 +42,17 @@
 
 窗口只会显示缺失并打开 Package Manager 入口。按项目实际团结版本安装 `cn.tuanjie.codely.bridge`，等待包解析、导入和 Domain Reload 完成，再重新读取状态。工具不会自动改 `Packages/manifest.json`。
 
+## Bridge 1.0.81+ 与 CodelyCLI 版本不匹配
+
+Bridge 1.0.81 起把运行时 `.com-unity-codely.json` 写入项目的 `Temp/` 目录；这是动态连接状态，不要复制到项目根目录，也不要提交到版本库。CodelyCLI 需要使用支持该位置的版本；当前已验证 `1.0.0-rc.60` 可以从项目根目录自动发现 `Temp` 描述文件，而较旧版本可能直接报“找不到 `.com-unity-codely.json`”。
+
+先升级并确认版本：
+
+    npm install -g @unity-china/codely-cli@latest
+    codely.cmd --version
+
+升级后重新读取 EditorWindow 的 CodelyCLI 路径，并重启使用 `tuanjie` MCP 的 Agent 会话。`--unity-project-path` 仍应填写项目根目录，不要把 `Temp` 当作项目根写入配置。
+
 ## MCP 根路径不一致
 
 如果当前 Agent 工作区和 MCP 状态报告的项目根不同，立即停止写入。关闭错误项目的连接，连接目标项目后重新读取根路径；不要把调用成功当作写入当前项目。

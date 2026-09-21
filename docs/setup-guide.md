@@ -18,6 +18,8 @@
        $cli
        & $cli --version
 
+   如果项目使用 Bridge 1.0.81 或更高版本，请保持 CodelyCLI 为支持 `Temp/.com-unity-codely.json` 的最新版本；当前已验证 `1.0.0-rc.60` 可用。MCP 的 `--unity-project-path` 仍填写项目根目录。
+
    也可以参考 [Codely CLI 安装说明](https://codely-docs.tuanjie.cn/learn/ai-programming-environment-setup-guide/)。
 4. 安装至少一个支持本地 MCP STDIO 和 Agent Skills 的客户端，在其中打开当前团结项目并完成工作区/目录信任。Agent 可以在具备桌面操作能力时帮你定位或打开项目；出现信任、访问权限或受保护操作弹窗时，由用户在客户端界面确认。常用客户端的打开和信任方法见[客户端参考与手动回退](agent-configurations.md)。Codex、Claude Code、Cursor、Qoder 和 WorkBuddy 都要安装本仓库的五个 Skill，再用 EditorWindow 配置各自的 MCP 入口。
 

@@ -67,8 +67,13 @@ namespace QJX.CodexTuanjieBridge.Editor
             }
 
             string root = projectRoot ?? string.Empty;
+            // Bridge 1.0.81 moved the runtime descriptor into Temp. Keep the
+            // root check for older Bridge versions, but never read or copy the
+            // descriptor contents because it contains live connection state.
             status.DescriptorExists = File.Exists(
-                Path.Combine(root, ".com-unity-codely.json"));
+                    Path.Combine(root, ".com-unity-codely.json")) ||
+                File.Exists(
+                    Path.Combine(root, "Temp", ".com-unity-codely.json"));
             IReadOnlyList<string> environmentPaths =
                 CodelyCliEnvironmentReader.ReadValues("CODELY_CLI_PATH");
             status.CodelyCli = CodelyCliLocator.Resolve(
